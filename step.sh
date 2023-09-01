@@ -169,7 +169,7 @@ for (( i=0 ; i<${#TASKS[*]} ; ++i ))
 do
         echo $'\t'"${magenta}⚙️  "${TASKS[$i]}
 
-        res="$(curl -u $jira_user:$jira_token -X PUT -H 'Content-Type: application/json' --data-binary "${body}" https://${backlog_default_url}/rest/api/2/issue/${TASKS[$i]})"
+        res="$(curl -u $jira_user:$jira_token -X PUT -H 'Content-Type: application/json' --data-binary "${body}" ${backlog_default_url}/rest/api/2/issue/${TASKS[$i]})"
 
         if test "$res" == ""
         then
