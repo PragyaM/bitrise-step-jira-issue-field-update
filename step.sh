@@ -20,50 +20,50 @@ IFS=$SAVEDIFS
 
 LAST_COMMIT=$(git log -1 --pretty=format:%b)
 
-TASKS=()
+TASKS=$jira_issue_list
 
-echo "${blue}⚡ ️Last commit:${cyan}"
-echo $'\t'"📜 "$LAST_COMMIT
-echo "${reset}"
+# echo "${blue}⚡ ️Last commit:${cyan}"
+# echo $'\t'"📜 "$LAST_COMMIT
+# echo "${reset}"
 
-if (( ${#MERGES[*]} > 0 ))
-then
-    echo "${blue}⚡ Last merge commits:${cyan}"
+# if (( ${#MERGES[*]} > 0 ))
+# then
+#     echo "${blue}⚡ Last merge commits:${cyan}"
 
-    for (( i=0 ; i<${#MERGES[*]} ; ++i ))
-    do
-        echo $'\t'"📜 "${MERGES[$i]}
-    done
+#     for (( i=0 ; i<${#MERGES[*]} ; ++i ))
+#     do
+#         echo $'\t'"📜 "${MERGES[$i]}
+#     done
 
-    echo "${reset}"
+#     echo "${reset}"
 
-    if [ "$LAST_COMMIT" = "${MERGES[0]}" ];
-    then
-        echo "${green}✅ Merge commit detected. Searching for tasks in merge commits messages...${cyan}"
-        for (( i=0 ; i<${#MERGES[*]} ; ++i ))
-        do
-            echo $'\t'"📜 "${MERGES[$i]}
-        done
+#     if [ "$LAST_COMMIT" = "${MERGES[0]}" ];
+#     then
+#         echo "${green}✅ Merge commit detected. Searching for tasks in merge commits messages...${cyan}"
+#         for (( i=0 ; i<${#MERGES[*]} ; ++i ))
+#         do
+#             echo $'\t'"📜 "${MERGES[$i]}
+#         done
 
-        for task in $(echo $MERGES | grep "$project_prefix[0-9]{1,5}" -E -o || true | sort -u -r --version-sort)
-        do
-            if [[ ! " ${TASKS[@]} " =~ " ${task} " ]]; then
-                TASKS+=($task)
-            fi
-        done
-    else
-        echo "${magenta}☑️  Not a merge commit. Searching for tasks in current commit message...${cyan}"
-        echo
-        echo $'\t'"📜 "$LAST_COMMIT "${reset}"
+#         for task in $(echo $MERGES | grep "$project_prefix[0-9]{1,5}" -E -o || true | sort -u -r --version-sort)
+#         do
+#             if [[ ! " ${TASKS[@]} " =~ " ${task} " ]]; then
+#                 TASKS+=($task)
+#             fi
+#         done
+#     else
+#         echo "${magenta}☑️  Not a merge commit. Searching for tasks in current commit message...${cyan}"
+#         echo
+#         echo $'\t'"📜 "$LAST_COMMIT "${reset}"
         
-        for task in $(echo $LAST_COMMIT | grep "$project_prefix[0-9]{1,5}" -E -o || true | sort -u -r --version-sort)
-        do
-            if [[ ! " ${TASKS[@]} " =~ " ${task} " ]]; then
-                TASKS+=($task)
-            fi
-        done
-    fi
-fi
+#         for task in $(echo $LAST_COMMIT | grep "$project_prefix[0-9]{1,5}" -E -o || true | sort -u -r --version-sort)
+#         do
+#             if [[ ! " ${TASKS[@]} " =~ " ${task} " ]]; then
+#                 TASKS+=($task)
+#             fi
+#         done
+#     fi
+# fi
 
 SAVEDIFS=$IFS
 IFS=$'|'

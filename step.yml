@@ -10,13 +10,10 @@
 title: |-
   Jira Issue Field Add Or Update
 summary: |
-  Adds or updates field value for all issues from pull request merge commits. It uses the commit message to determine which issues should be commented.
+  Adds or updates field value for all issues in a provided Jira issue list.
 description: |
-  This steps scans last merge commits or last commit if it is not a merge commit, and gathers all Jira issues names found in commit messages.
-  Once the tasks are found it uses the credentials provided to use Jira API and update each found issue field with specified value.
+  This step takes a Jira issue list as an input, uses the credentials provided to use Jira API and update each issue field with specified value.
   Value can be added as an array element or the whole field can be updated.
-  
-  The regex pattern to look for Jira tasks is "<project_prefix>[0-9]{1,5}"
   
   This step is using Jira API v2.
 website: https://github.com/maqoo/bitrise-step-jira-issue-field-update
@@ -48,14 +45,13 @@ toolkit:
     entry_file: step.sh
 
 inputs:
-  - project_prefix:
+  - jira_issue_list:
     opts:
-      title: "Jira project prefix"
-      summary: "Jira project prefix to search for tasks."
+      title: "Jira issue list"
+      summary: "Jira tickets to update"
       description: |
-        Jira project prefix to search for tasks.
-        
-        e.g. "PROJ-"
+        Jira tickets to update fields on.
+        e.g. PROJ-1234
       is_expand: true
       is_required: true
   - backlog_default_url:

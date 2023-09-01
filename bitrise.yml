@@ -77,7 +77,7 @@ workflows:
           file if you would not specify another value.
         run_if: "true"
         inputs:
-        - project_prefix: AUKB-
+        - jira_issue_list: PROJ-1234
         - backlog_default_url: ormlondon.atlassian.net
         - jira_user: $JIRA_USER
         - jira_token: $JIRA_TOKEN
