@@ -9,16 +9,16 @@ magenta=$'\e[35m'
 cyan=$'\e[36m'
 reset=$'\e[0m'
 
-MERGES=$(git log $(git merge-base --octopus $(git log -1 --merges --pretty=format:%P))..$(git log -1 --merges --pretty=format:%H) --pretty=format:%s)
+# MERGES=$(git log $(git merge-base --octopus $(git log -1 --merges --pretty=format:%P))..$(git log -1 --merges --pretty=format:%H) --pretty=format:%s)
 
-SAVEDIFS=$IFS
-IFS=$'\n'
+# SAVEDIFS=$IFS
+# IFS=$'\n'
 
-MERGES=($MERGES)
+# MERGES=($MERGES)
 
-IFS=$SAVEDIFS
+# IFS=$SAVEDIFS
 
-LAST_COMMIT=$(git log -1 --pretty=format:%b)
+# LAST_COMMIT=$(git log -1 --pretty=format:%b)
 
 TASKS=$jira_issue_list
 
@@ -65,26 +65,26 @@ TASKS=$jira_issue_list
 #     fi
 # fi
 
-SAVEDIFS=$IFS
-IFS=$'|'
+# SAVEDIFS=$IFS
+# IFS=$'|'
 
-DIVIDED_VALUES=($jira_issue_field_value)
+# DIVIDED_VALUES=($jira_issue_field_value)
 
-IFS=$SAVEDIFS
+# IFS=$SAVEDIFS
 
 create_add_array_data()
 {
-        VALUES_STRING=""
+        VALUES_STRING='{ "add": {"name": '$jira_issue_field_value'} }'
 
-        for (( i=0 ; i<${#DIVIDED_VALUES[*]} ; ++i ))
-        do
-                if (( i > 0 ))
-                then
-                        VALUES_STRING="${VALUES_STRING},"
-                fi
+        # for (( i=0 ; i<${#DIVIDED_VALUES[*]} ; ++i ))
+        # do
+        #         if (( i > 0 ))
+        #         then
+        #                 VALUES_STRING="${VALUES_STRING},"
+        #         fi
 
-                VALUES_STRING=${VALUES_STRING}'{ "add": "'${DIVIDED_VALUES[$i]}'" }'
-        done
+        #         VALUES_STRING=${VALUES_STRING}'{ "add": "{'name': '${DIVIDED_VALUES[$i]}'}" }'
+        # done
 
 cat<<EOF
 {
@@ -99,17 +99,17 @@ EOF
 
 create_set_array_data()
 {
-        VALUES_STRING=""
+        VALUES_STRING='{"name": '$jira_issue_field_value'}'
 
-        for (( i=0 ; i<${#DIVIDED_VALUES[*]} ; ++i ))
-        do
-                if (( i > 0 ))
-                then
-                        VALUES_STRING="${VALUES_STRING},"
-                fi
+        # for (( i=0 ; i<${#DIVIDED_VALUES[*]} ; ++i ))
+        # do
+        #         if (( i > 0 ))
+        #         then
+        #                 VALUES_STRING="${VALUES_STRING},"
+        #         fi
 
-                VALUES_STRING=${VALUES_STRING}'"'${DIVIDED_VALUES[$i]}'"'
-        done
+        #         VALUES_STRING=${VALUES_STRING}'"'${DIVIDED_VALUES[$i]}'"'
+        # done
 
 cat<<EOF
 {
