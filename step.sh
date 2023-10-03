@@ -165,11 +165,11 @@ echo "${blue}"
 echo "${body}"
 echo "${reset}"
 
-for (( i=0 ; i<${#TASKS[*]} ; ++i ))
+for TASK in $TASKS
 do
-        echo $'\t'"${magenta}⚙️  "${TASKS[$i]}
+        echo $'\t'"${magenta}⚙️  "$TASK
 
-        res="$(curl -u $jira_user:$jira_token -X PUT -H 'Content-Type: application/json' --data-binary "${body}" ${backlog_default_url}/rest/api/2/issue/${TASKS[$i]})"
+        res="$(curl -u $jira_user:$jira_token -X PUT -H 'Content-Type: application/json' --data-binary "${body}" ${backlog_default_url}/rest/api/2/issue/$TASK)"
 
         if test "$res" == ""
         then
